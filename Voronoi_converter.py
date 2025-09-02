@@ -137,6 +137,7 @@ def convertForCVTCalculation(context):
   window.exec_()
   result = window.result()
   #compute perm here
+  temp_dir = None
   if result:
     t = time.time()
     smesh = salome.smesh.smeshBuilder.New()
@@ -197,6 +198,7 @@ def convertForCVTCalculation(context):
     print ("    END \n")
     print ("####################\n\n")
 
-  temp_dir.cleanup()
+  if temp_dir:
+    temp_dir.cleanup()
   return
 
