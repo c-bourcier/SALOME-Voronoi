@@ -19,7 +19,7 @@
 
 
 import time
-
+import tempfile
 
 
 def convertForCVTCalculation(context):
@@ -140,7 +140,8 @@ def convertForCVTCalculation(context):
   if result:
     t = time.time()
     smesh = salome.smesh.smeshBuilder.New()
-    path = '/home/%s/.config/salome/Plugins/SALOME-Voronoi/' %(os.getlogin())
+    temp_dir = tempfile.TemporaryDirectory(prefix="salome_geogram_")
+    path = temp_dir.name + "/"
   
     #get the mesh
     print("\tExport boundary mesh")
@@ -169,6 +170,7 @@ def convertForCVTCalculation(context):
       print ("\tTime elapsed {} s".format(time.time() - t))
       print ("    END \n")
       print ("####################\n\n")
+      temp_dir.cleanup()
       return
     print("")
     
@@ -192,5 +194,6 @@ def convertForCVTCalculation(context):
     print ("    END \n")
     print ("####################\n\n")
 
+  temp_dir.cleanup()
   return
 
