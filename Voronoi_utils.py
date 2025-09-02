@@ -67,7 +67,8 @@ def exportBoundary(meshToExport, output):
 
 def vorpalite(input_boundary, output_mesh = None, input_points = None, params = None):
   #prepare command to call
-  cmd = [os.path.dirname(__file__)+"/geogram_1.8.2/bin/vorpalite"]
+  # assuming vorpalite is in PATH (add it to salome launcher)
+  cmd = ["vorpalite"]
   #params
   if params:
     if isinstance(params, str): params = params.split()
@@ -86,6 +87,7 @@ def vorpalite(input_boundary, output_mesh = None, input_points = None, params = 
   if output_mesh:
     cmd += [output_mesh]
   #call command
+  print("Launching", " ".join(cmd))
   res = subprocess.call(cmd)
   return res
 
