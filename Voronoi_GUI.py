@@ -100,7 +100,7 @@ class Ui_Dialog(object):
     self.pb_origSurfaceFile.setText(_translate("Dialog", "Select"))
     self.label_surface.setText(_translate("Dialog", "Boundary mesh (mandatory):"))
     self.label_params.setText(_translate("Dialog", "Parameters to pass to Vorpalite:"))
-    self.le_params.setText("profile=poly generate_ids=true simplify=tets_voronoi_boundary")
+    self.le_params.setText("profile=poly generate_ids=true simplify=tets_voronoi_boundary normal_angle_threshold=30 remesh:nb_pts=500")
     self.label_addCenter0D.setText(_translate("Dialog", "Create groups from seeds mesh nodes groups"))
     
     return
