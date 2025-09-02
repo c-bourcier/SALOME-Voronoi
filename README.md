@@ -7,40 +7,28 @@ Note the Vorpalite program has many features (such as parallel tetrahedral meshi
 
 ## Installation
 
-Below instructions were tested using Ubuntu 22.04 and Salome 9.9
+Below instructions were tested using Ubuntu 22.04 and Salome 9.14.
 They should work for other Linux distributions without so much modifications.
 
-1. Clone this repository inside your Salome plugin directory `$HOME/.config/salome/Plugins/`.
-If this folder does not exist, create it.
+1. Clone this repository on your computer.
 
 2. Install Vorpalite dependencies: 
 ```
 sudo apt install libboost-dev libcgal-dev libglu1-mesa-dev libxxf86vm-dev libxtst-dev libxrandr-dev libxinerama-dev libxcursor-dev doxygen cmake g++
 ```
-3. Compile Vorpalite executable using the dedicated script `install_vorpalite.sh`. 
+3. Compile Vorpalite executable using the dedicated script `install_vorpalite.sh`. Note that you can use more recent version of geogram if you wish.
 
-4. Create or add the following line to the `smesh_plugin.py` file:
-``` 
-import sys
-import os
-import salome_pluginsmanager
-
-try:
-  pathVoronoi = os.getenv("HOME") + "/.config/salome/Plugins/SALOME-Voronoi"
-  if not pathVoronoi in sys.path:
-      sys.path.append(pathVoronoi)
- 
-  import Voronoi_converter
-
-  salome_pluginsmanager.AddFunction('Voronoi/Convert to Voronoi', '', Voronoi_converter.convertForCVTCalculation)
-  
-except Exception as e:
-
-  print("Failed to import SALOME-Voronoi plugin:", e)
+4. Add Vorpalite and the Voronoi plugin to `salome` launcher. For instance:
 
 ```
+    #[geogram]
+    context.addToPath(r"/opt/geogram/bin")
+    context.setVariable(r"GEOGRAMPLUGIN_ROOT_DIR", r"/opt/salome/SALOME-Voronoi")
+    context.setVariable(r"SMESH_PYPLUGIN_DIR", r"${GEOGRAMPLUGIN_ROOT_DIR}", overwrite=True)
+    context.addToPythonPath(r"GEOGRAMPLUGIN_ROOT_DIR")
+```
 
-5. Your plugin is operational. You can now start converting meshes with `Mesh/Plugins/Voronoi/Convert to Voronoi`.
+5. Your plugin is operational. You can now start converting meshes with the menu `Mesh/Plugins/Voronoi/Convert to Voronoi` or the toolbar icon <img src="mesh_plugins_geogram.png" width="32px" alt="Voronoi plugin icon">.
 
 
 ## Use the plugin
@@ -56,6 +44,10 @@ except Exception as e:
 4. Check "Create groups from seeds mesh nodes group" to create groups of volume based on the existing nodes groups in your seed mesh.
 
 5. Click OK to launch the Voronoi Diagram computation.
+
+6. Go back to the terminal to have a look at the output of vorpalite while it generates the mesh.
+
+7. Once the mesh generation is finished, the mesh is automatically imported in SALOME MESH with the `_Voronoi` suffix name. Click on the eye next to it to display it.
 
 
 ## Examples
