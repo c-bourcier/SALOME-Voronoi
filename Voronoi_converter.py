@@ -186,6 +186,9 @@ def convertForCVTCalculation(context):
       print("\tCreate groups from seeds mesh")
       Voronoi_utils.createGroupsFromNodes(seedsMesh, Vmesh)
     
+    #create skin
+    nbAdded, Vmesh, SkinGroup = Vmesh.MakeBoundaryElements( SMESH.BND_2DFROM3D,'Skin', '', 0, [])
+
     if salome.sg.hasDesktop():
       salome.sg.updateObjBrowser()
       
